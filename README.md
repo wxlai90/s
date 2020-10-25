@@ -12,7 +12,6 @@ s [PORT||5000]
 
 
 ```
-npx @lwxatgt/s
-s [PORT||5000]
+npx @lwxatgt/s [PORT||5000]
 ```
 
