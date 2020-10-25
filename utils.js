@@ -38,6 +38,8 @@ const getAllFiles = (path) => {
 const isPathDirectory = (path) => {
     if (path === '/') return true
 
+    if (path === '/favicon.ico') return false
+
     path = path.substr(1)
     return fs.lstatSync(path).isDirectory()
 }

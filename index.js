@@ -18,20 +18,25 @@ app.get('*', async (req, res, next) => {
     if (fileUtils.isPathDirectory(path)) {
         let responseHTML = '<h1>Directories</h1>'
 
-        const allDirectories = await fileUtils.getAllDirectories(`.${path}`)
+        try {
+            const allDirectories = await fileUtils.getAllDirectories(`.${path}`)
 
-        responseHTML += allDirectories
-            .map(dir => `<a href="${dir}">${dir}</a></br>`)
-            .join('\n')
+            responseHTML += allDirectories
+                .map(dir => `<a href="${dir}">${dir}</a></br>`)
+                .join('\n')
 
 
-        responseHTML += '<h1>Files</h1>'
+            responseHTML += '<h1>Files</h1>'
 
-        const allFiles = await fileUtils.getAllFiles(`.${path}`)
+            const allFiles = await fileUtils.getAllFiles(`.${path}`)
 
-        responseHTML += allFiles
-            .map(file => `<a href="${file}">${file}</a></br>`)
-            .join('\n')
+            responseHTML += allFiles
+                .map(file => `<a href="${file}">${file}</a></br>`)
+                .join('\n')
+        }
+        catch (error) {
+            console.error(error)
+        }
 
         res.send(responseHTML)
     }

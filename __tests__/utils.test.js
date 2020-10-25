@@ -42,4 +42,18 @@ describe('file utils', () => {
         const allFiles = await fileUtils.getAllFiles('/mockPath')
         expect(allFiles).toEqual(['is File'])
     })
+
+
+    it('#isPathDirectory() should return true if path is /', () => {
+        const result = fileUtils.isPathDirectory('/')
+
+        expect(result).toEqual(true)
+    })
+
+
+    it('#isPathDirectory() should return false if path is /favicon.ico', () => {
+        const result = fileUtils.isPathDirectory('/favicon.ico')
+
+        expect(result).toEqual(false)
+    })
 })
