@@ -3,13 +3,6 @@ const fileUtils = require('../utils')
 
 
 describe('file utils', () => {
-
-    it('#isPathDirectory() should return true when path is "/"', () => {
-        const result = fileUtils.isPathDirectory('/')
-        expect(result).toEqual(true)
-    })
-
-
     it('#getAllDirectories() should return a promise that resolves to an array of directories only', async () => {
         fs.readdir = jest.fn((_, __, callback) => callback(null, [
             {
