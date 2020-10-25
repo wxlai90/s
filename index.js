@@ -1,14 +1,17 @@
 #!/usr/bin/env node
 
-const express = require('express')
+const express = require('express');
+const morgan = require('morgan');
 const app = express()
+const logger = require('morgan')
+
 
 const PORT = process.argv[2] || 5000;
 
 
 const fileUtils = require('./utils')
 
-
+app.use(morgan('dev'))
 app.use(express.static(process.cwd()))
 
 
