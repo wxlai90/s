@@ -35,7 +35,7 @@ app.use(express.static(process.cwd()))
 app.use(checkAuth(PASSWORD))
 
 
-app.use(async (req, res, next) => {
+app.use(async (req, res, _) => {
     const { path } = req
 
     if (fileUtils.isPathDirectory(path)) {

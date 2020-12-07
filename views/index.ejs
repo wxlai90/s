@@ -7,6 +7,7 @@
     <title>s - A simple http server</title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <style>
         * {
@@ -24,12 +25,24 @@
             font-family: 'Lato', sans-serif;
             font-weight: 400;
             line-height: 1.2;
+            color: #777;
+        }
+
+        .header {
+            background: linear-gradient(to right, rgba(0, 0, 0, 0.267), rgba(0, 0, 0, 0.281)), linear-gradient(to right, #43C6AC, #191654);
+            height: 35vh;
+            color: white;
+            font-size: 10rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 100;
         }
 
         section {
             display: flex;
             flex-direction: column;
-            align-items: center;
+            margin-top: 1rem;
         }
 
         h1 {
@@ -38,30 +51,23 @@
             padding: 2rem 0;
         }
 
-        ul {
-            list-style: none;
-        }
-
-        li {
-            width: 75vw;
+        .item {
             padding: 1rem 2rem;
-            margin: 2rem 0;
-            border-radius: 3px;
-        }
-
-        .directory {
-            background: linear-gradient(to right, #FF0099, #493240);
-        }
-
-        .file {
-            background: linear-gradient(to right, #8360c3, #2ebf91);
+            border-bottom: 1px solid #beb7b7;
+            display: flex;
+            align-items: center;
         }
 
         a:visited,
         a:link {
-            color: white;
+            margin: 0 1rem;
+            color: black;
+            width: 100%;
         }
 
+        a:hover {
+            color: #999;
+        }
 
         @media only screen and (max-width: 687px) {
             h1 {
@@ -72,28 +78,24 @@
 </head>
 
 <body>
+    <header class="header">
+        S - A simple HTTP Server
+    </header>
     <section>
-        <% if(allDirectories.length > 0){ %>
-        <div class="directories-container">
-            <h1>Directories</h1>
-            <ul>
-                <% allDirectories.forEach((dir) => { %>
-                <li class="directory"><a href="<%= dir %>"><%= dir %></a></li>
-                <% }) %>
-            </ul>
+        <% allDirectories.forEach((directory) => { %>
+        <div class="item">
+            <span class="material-icons">folder_open</span>
+            <a href="<%= directory %>"><%= directory %></a>
         </div>
-        <% } %>
+        <% }) %>
 
-        <% if(allFiles.length > 0){ %>
-        <div class="files-container">
-            <h1>Files</h1>
-            <ul>
-                <% allFiles.forEach((file) => { %>
-                <li class="file"><a href="<%= file %>"><%= file %></a></li>
-                <% }) %>
-            </ul>
+        <% allFiles.forEach((file) => { %>
+        <div class="item">
+            <span class="material-icons">description</span>
+            <a href="<%= file %>"><%= file %></a>
         </div>
-        <% } %>
+        <% }) %>
+
     </section>
 </body>
 
