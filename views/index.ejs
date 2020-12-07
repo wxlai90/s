@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>s - A simple http server</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 62.5%;
+        }
+
+        body {
+            font-size: 1.6rem;
+            font-family: 'Lato', sans-serif;
+            font-weight: 400;
+            line-height: 1.2;
+        }
+
+        section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            font-size: 10rem;
+            font-weight: 100;
+            padding: 2rem 0;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        li {
+            width: 75vw;
+            padding: 1rem 2rem;
+            margin: 2rem 0;
+            border-radius: 3px;
+        }
+
+        .directory {
+            background: linear-gradient(to right, #FF0099, #493240);
+        }
+
+        .file {
+            background: linear-gradient(to right, #8360c3, #2ebf91);
+        }
+
+        a:visited,
+        a:link {
+            color: white;
+        }
+
+
+        @media only screen and (max-width: 687px) {
+            h1 {
+                font-size: 5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <section>
+        <% if(allDirectories.length > 0){ %>
+        <div class="directories-container">
+            <h1>Directories</h1>
+            <ul>
+                <% allDirectories.forEach((dir) => { %>
+                <li class="directory"><a href="<%= dir %>"><%= dir %></a></li>
+                <% }) %>
+            </ul>
+        </div>
+        <% } %>
+
+        <% if(allFiles.length > 0){ %>
+        <div class="files-container">
+            <h1>Files</h1>
+            <ul>
+                <% allFiles.forEach((file) => { %>
+                <li class="file"><a href="<%= file %>"><%= file %></a></li>
+                <% }) %>
+            </ul>
+        </div>
+        <% } %>
+    </section>
+</body>
+
+</html>

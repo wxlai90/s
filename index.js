@@ -1,49 +1,64 @@
 #!/usr/bin/env node
-
 const express = require('express');
 const morgan = require('morgan');
 const app = express()
-const logger = require('morgan')
-
-
-const PORT = process.argv[2] || 5000;
-
-
+const cookieParser = require('cookie-parser')
 const fileUtils = require('./utils')
-
-app.use(morgan('dev'))
-app.use(express.static(process.cwd()))
+const checkAuth = require('./middleware/checkAuth')
 
 
-app.get('*', async (req, res, next) => {
-    const { path } = req
+let PORT = 5000;
+let PASSWORD
 
-    if (fileUtils.isPathDirectory(path)) {
-        let responseHTML = '<h1>Directories</h1>'
+const args = process.argv.slice(2)
 
-        try {
-            const allDirectories = await fileUtils.getAllDirectories(`.${path}`)
+args.forEach((arg, index) => {
+    if (arg === '--port') {
+        PORT = args[index + 1]
+    }
 
-            responseHTML += allDirectories
-                .map(dir => `<a href="${dir}">${dir}</a></br>`)
-                .join('\n')
-
-
-            responseHTML += '<h1>Files</h1>'
-
-            const allFiles = await fileUtils.getAllFiles(`.${path}`)
-
-            responseHTML += allFiles
-                .map(file => `<a href="${file}">${file}</a></br>`)
-                .join('\n')
+    if (arg === '--password') {
+        if (args[index + 1] && args[index + 1] !== '--port') {
+            PASSWORD = args[index + 1]
+        } else {
+            PASSWORD = Math.random().toString().substr(2, 6)
         }
-        catch (error) {
-            console.error(error)
-        }
-
-        res.send(responseHTML)
     }
 })
 
 
-app.listen(PORT, () => console.log(`Listening on ${PORT}`))
+app.use(express.urlencoded({ extended: true }))
+app.use(morgan('dev'))
+app.set('view engine', 'ejs')
+app.use(cookieParser())
+app.use(express.static(process.cwd()))
+app.use(checkAuth(PASSWORD))
+
+
+app.use(async (req, res, next) => {
+    const { path } = req
+
+    if (fileUtils.isPathDirectory(path)) {
+        try {
+            const allDirectories = await fileUtils.getAllDirectories(`.${path}`)
+            const allFiles = await fileUtils.getAllFiles(`.${path}`)
+
+            res.render('index', {
+                allDirectories,
+                allFiles
+            })
+        }
+        catch (error) {
+            console.error(error)
+            res.render('error', { error })
+        }
+    }
+})
+
+
+app.listen(PORT, () => {
+    console.log(`Listening on ${PORT}`)
+    if (PASSWORD) {
+        console.log(`Password: ${PASSWORD}`)
+    }
+})
