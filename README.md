@@ -5,13 +5,25 @@ A simple http server that serves file from current directory recursively into su
 
 ```
 npm i -g @lwxatgt/s
-s [PORT||5000]
+s
+s --port 5005
+s --password
+s --password [my_password]
+s --port 5005 --password [my_password]
 ```
 
 ### OR
 
 
 ```
-npx @lwxatgt/s [PORT||5000]
-```
+npx @lwxatgt/
+s
+s --port 5005
+s --password
+s --password [my_password]
+s --port 5005 --password [my_password]```
 
+Parameter | Type
+------------ | -------------
+--port | Number
+--password | Any or Blank for randomly generated 6 digit password
