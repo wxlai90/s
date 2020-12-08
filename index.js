@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+const path = require('path')
 const express = require('express');
 const morgan = require('morgan');
 const app = express()
@@ -30,6 +31,7 @@ args.forEach((arg, index) => {
 app.use(express.urlencoded({ extended: true }))
 app.use(morgan('dev'))
 app.set('view engine', 'ejs')
+app.set('views', path.join(__dirname, 'views'))
 app.use(cookieParser())
 app.use(express.static(process.cwd()))
 app.use(checkAuth(PASSWORD))
